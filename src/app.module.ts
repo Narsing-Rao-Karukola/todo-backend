@@ -4,8 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { User } from './auth/user.entity';
-import { Task } from './tasks/entities/task.entity';
-import { TasksModule } from './tasks/tasks.module';
+import { Todo } from './todo/entities/todo.entity';
+import { TodoModule } from './todo/todo.module';
 
 @Module({
   imports: [
@@ -16,13 +16,13 @@ import { TasksModule } from './tasks/tasks.module';
       username: 'root',
       password: '123456789',
       database: 'tododb',
-      entities: [User, Task],
+      entities: [User, Todo],
       autoLoadEntities: true,
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([User, Task]),
+    TypeOrmModule.forFeature([User, Todo]),
     AuthModule,
-    TasksModule,
+    TodoModule,
   ],
   providers: [AppService],
   controllers: [AppController],

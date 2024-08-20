@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class UpdateTaskStatusDto {
+export class UpdateTodoTitleDto {
   @IsNotEmpty()
-  completed: boolean;
+  title: string;
 }
