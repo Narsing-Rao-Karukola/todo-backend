@@ -17,12 +17,17 @@ export class UserService {
 
   async signUp(authCredentialsDto: AuthCredentialsDto): Promise<any> {
     const { username, password } = authCredentialsDto;
+    const isExistingUser = await this.userRepository.findOne({
+      where: { username },
+    });
+    if (isExistingUser.username) {
+      throw new ConflictException('Username already exists');
+    }
 
     let user = new User();
     user.username = username;
     user.salt = await bcrypt.genSalt();
     user.password = await this.hashPassword(password, user.salt);
-
     try {
       user = await this.userRepository.save(user);
     } catch (error) {
