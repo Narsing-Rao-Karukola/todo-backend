@@ -14,10 +14,10 @@ export class TaskStatusValidationPipe implements PipeTransform {
     if (!this.isStatusValid(value.status)) {
       throw new BadRequestException(`"${value.status}" is an invalid status`);
     }
-    return value
+    return value;
   }
 
   private isStatusValid(status: any) {
-     return this.allowedStatuses.includes(status); 
+    return this.allowedStatuses.includes(status);
   }
 }

@@ -6,6 +6,7 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskStatusDto } from './dto/update-task.dto';
 import { Task } from './entities/task.entity';
 import { TaskService } from './entities/task.repository';
+import { UpdateTaskTitleDto } from './dto/update-task-title';
 
 @Injectable()
 export class TasksService {
@@ -47,9 +48,22 @@ export class TasksService {
     updateTaskStatusDto: UpdateTaskStatusDto,
     user: User,
   ): Promise<Task> {
-    const { completed } = updateTaskStatusDto;
+    const { completed, title } = updateTaskStatusDto;
     const task = await this.getTaskById(id, user);
     task.completed = completed;
+    task.title = title;
+    await this.taskRepository.update({ id }, task);
+    return task;
+  }
+
+  async updateTaskTitle(
+    id: number,
+    updateTaskTitleDto: UpdateTaskTitleDto,
+    user: User,
+  ): Promise<Task> {
+    const { title } = updateTaskTitleDto;
+    const task = await this.getTaskById(id, user);
+    task.title = title;
     await this.taskRepository.update({ id }, task);
     return task;
   }
